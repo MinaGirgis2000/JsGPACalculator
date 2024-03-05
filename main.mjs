@@ -26,7 +26,7 @@ for (const course of allCourses) {
     courseOutput = (typeof course.finalGrade == "string") ? courseOutput + course.finalGrade + "\t" : courseOutput + course.finalGrade.toFixed(2) + "\t" + course.letter;
     try {
         courseOutput += "\t  " + course.value.toFixed(2) + "\t  ";
-    } catch (TypeError) {
+    } catch {
         courseOutput += "\t  " + 0 + "\t  ";
     }
     
