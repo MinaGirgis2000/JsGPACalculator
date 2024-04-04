@@ -1,15 +1,17 @@
 export class GPA {
     constructor(course) {
-        this.name = course.Name;
+        this.name = course.name;
         this.grades = course.grades;
-        this.midterm = (course.midterm == undefined) ? 0 : course.midterm;
-        this.final = (course.final == undefined) ? 0 : course.final;
+        this.midterm = course.midterm || 0;
+        this.final = course.final || 0;
         this.credits = course.credits;
         this.level = course.level;
-        this.labSem = (course.labSem == undefined) ? "None" : course.labSem;
+        this.labSem = course.labSem || "None";
+        this.weightedValue = this.value(true);
+        this.unweightedValue = this.value();
     }
 
-    get value() {
+    value(weighted=false) {
         const letters = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"]
         const academic = [4.3, 4, 3.7, 3.3, 3, 2.7, 2.3, 2, 1.7, 1.3, 1, 0.7, 0]
         const honors = [4.945, 4.6, 4.255, 3.795, 3.45, 3.105, 2.645, 2.3, 1.955, 1.338, 1.15, 0.805, 0]
@@ -17,13 +19,15 @@ export class GPA {
         
         const letterIndex = letters.indexOf(this.letter);
 
-        if (this.level.toUpperCase() == "H" || this.level.toUpperCase() == "HONORS") {
-            return honors[letterIndex];
-        } else if (this.level.toUpperCase() == "AP" || this.level.toUpperCase() == "ADVANCED" || this.level.toUpperCase() == "ADVANCED PLACEMENT") {
-            return advanced[letterIndex];
-        } else {
-            return academic[letterIndex];
+        if (weighted) {
+            if (this.level.toUpperCase() == "H" || this.level.toUpperCase() == "HONORS") {
+                return honors[letterIndex];
+            } else if (this.level.toUpperCase() == "AP" || this.level.toUpperCase() == "ADVANCED" || this.level.toUpperCase() == "ADVANCED PLACEMENT") {
+                return advanced[letterIndex];
+            }
         }
+        
+        return academic[letterIndex];
     }
 
     get finalGrade() {        
@@ -32,7 +36,7 @@ export class GPA {
         let totalPortion = 10;
 
         if (typeof this.grades == "string") {
-            return this.grades;
+            return this.grades.toUpperCase();
         } else {
             for (const grade of this.grades) {
                 sumGrade += grade;
@@ -72,7 +76,7 @@ export class GPA {
         
     }
 
-    get letter() {
+    get letter() {    
         if (typeof this.grades == "string") {
             return this.grades.toUpperCase();
         } else if (this.finalGrade == 100) {
@@ -110,26 +114,6 @@ export class GPA {
                 return letter + "+";
             }
            return letter
-        }
-    }
-
-    semCredits(sem) {
-        
-        if (this.credits <= 2.5) {
-            let secQuarter = (sem == 1) ? sem - 1 : sem + 1;
-            if (this.grades[sem] == 0 && this.grades[secQuarter] == 0) {
-                return 0;
-            } else {
-                return this.credits;
-            }
-        } else if (this.credits == 5 || this.credits == 10 || this.labSem.toUpperCase() == "BOTH") {
-            return this.credits / 2;
-        } else if (this.credits >= 7.5) {
-            if (sem == 1 && (this.labSem == "1" || this.labSem.toUpperCase() == "1ST" || this.labSem.toUpperCase() == "FIRST")) {
-                return 5;
-            } else {
-                return 2.5;
-            }
         }
     }
 

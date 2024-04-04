@@ -1,0 +1,25 @@
+[
+  {
+    "name": "Course 1",
+    "grades": "A",
+    "credits": 2.5,
+    "level": "A"
+  },
+  {
+    "name": "Course 2",
+    "grades": [0, 0, 0, 0],
+    "credits": 5,
+    "midterm": 0,
+    "final": 0,
+    "level": "A"
+  },
+  {
+    "name": "Course 3",
+    "grades": [0, 0, 0, 0],
+    "credits": 7.5,
+    "midterm": 0,
+    "final": 0,
+    "level": "A",
+    "labSem": "2nd"
+  }
+]

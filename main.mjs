@@ -1,52 +1,47 @@
 import { GPA } from "./GPA.js";
-import * as courses from "./courses.js";
+import courses9 from "./9thCourses.json"
+// import courses10 from "./10thCourses.json"
+// import courses11 from "./11thcourses.json";
+// import courses12 from "./12thcourses.json";
 
-const allCourses = [new GPA(courses.course1), new GPA(courses.course2), new GPA(courses.course3), new GPA(courses.course4), 
-                    new GPA(courses.course5), new GPA(courses.course6), new GPA(courses.course7), new GPA(courses.course8),
-                    new GPA(courses.course9)];
+const allCourses = [courses9];  // , courses10, courses11, courses12];  // <-- can add multiple grades to accurate accurate values for each one
 
-console.log("Freshman GPA: " + courses.GPA9);
-console.log("Sophomore GPA: " + courses.GPA10);
-
-let currentGPA = 0;
-let currentCredits = 0;
+let currentGPAValues = [0, 0, 0]; // [weighted GPA, unweighted GPA, credits]
+let gradeGPAValues = [0, 0, 0]; // [weighted GPA, unweighted GPA, credits]
 let courseOutput = "";
-for (const course of allCourses) {
 
-    currentGPA += course.value * course.creditsEarned;
-    currentCredits += course.creditsEarned;
+for (let i = 0; i < allCourses.length; i++) {
+    for (let k = 0; k < allCourses[i].length; k++) {
 
-    courseOutput += course.name;
+        const course = new GPA(allCourses[i][k]);
 
-    courseOutput += "\t\t\t";
-    if (course.name.length < 8) {
-        courseOutput += "\t";
-    }
+        gradeGPAValues[0] += course.weightedValue * course.creditsEarned;
+        gradeGPAValues[1] += course.unweightedValue * course.creditsEarned;
+        gradeGPAValues[2] += course.creditsEarned;
 
-    courseOutput = (typeof course.finalGrade == "string") ? courseOutput + course.finalGrade + "\t" : courseOutput + course.finalGrade.toFixed(2) + "\t" + course.letter;
-    try {
-        courseOutput += "\t  " + course.value.toFixed(2) + "\t  ";
-    } catch {
-        courseOutput += "\t  " + 0 + "\t  ";
-    }
-    
-    if (typeof course.grades != "string") {
-        for (const grade of course.grades) {
-            courseOutput += grade.toFixed(1) + "\t  ";
+        courseOutput += course.name;    
+        if (course.name.length < 8) {
+            courseOutput += "\t";
         }
-        courseOutput += course.midterm + "\t   " + course.final;
+        courseOutput += "\t ";
+        courseOutput += (!(typeof course.finalGrade == "string")) ? course.finalGrade.toFixed(2) : "";
+        courseOutput += "\t" + course.letter + "\t" + course.weightedValue.toFixed(2) + "\t   " + course.unweightedValue.toFixed(2);
+        courseOutput += "\n";
     }
+    console.log((9 + i) + "th Grade Weighted GPA: " + (gradeGPAValues[0] / gradeGPAValues[2]));
+    console.log((9 + i) + "th Grade Unweighted GPA: " + (gradeGPAValues[1] / gradeGPAValues[2]));
+    console.log("----------------------------------------------------|");
+    console.log("CLASS\t\t|  GRADES  |  W Value  |  UW Value  |");
+    console.log("----------------------------------------------------|");
+    console.log(courseOutput + "\n");
     
-    courseOutput += "\n";
-    
+    for (let i = 0; i < currentGPAValues.length; i++) {
+        currentGPAValues[i] += gradeGPAValues[i];
+    }
+
+    courseOutput = "";
+    gradeGPAValues = [0, 0, 0];
 }
 
-console.log("Junior GPA: " + (currentGPA / currentCredits));
-
-currentGPA += courses.prevGPA * courses.prevCredits;
-currentGPA /= currentCredits + courses.prevCredits;
-console.log("GPA: " + currentGPA);
-
-console.log("\nCLASS\t\t\t|   \tGRADES\t\t|  GPA\t|  MP1\t|  MP2\t|  MP3\t|  MP4\t|  Mid\t| Final\t|");
-console.log("--------------------------------------------------------------------------------------------------------|");
-console.log(courseOutput + "\n");
+console.log("Weighted GPA: " + (currentGPAValues[0] / currentGPAValues[2]));
+console.log("Unweighted GPA: " + (currentGPAValues[1] / currentGPAValues[2]));
