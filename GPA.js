@@ -5,8 +5,8 @@ export class GPA {
         this.midterm = course.midterm || 0;
         this.final = course.final || 0;
         this.credits = course.credits;
-        this.level = course.level;
-        this.labSem = course.labSem || "None";
+        this.level = course.level.toUpperCase();
+        this.labSem = course.labSem.toUpperCase() || "None";
         this.weightedValue = this.value(true);
         this.unweightedValue = this.value();
     }
@@ -20,9 +20,9 @@ export class GPA {
         const letterIndex = letters.indexOf(this.letter);
 
         if (weighted) {
-            if (this.level.toUpperCase() == "H" || this.level.toUpperCase() == "HONORS") {
+            if (this.level == "H" || this.level == "HONORS") {
                 return honors[letterIndex];
-            } else if (this.level.toUpperCase() == "AP" || this.level.toUpperCase() == "ADVANCED" || this.level.toUpperCase() == "ADVANCED PLACEMENT") {
+            } else if (this.level == "AP" || this.level == "ADVANCED" || this.level == "ADVANCED PLACEMENT") {
                 return advanced[letterIndex];
             }
         }
@@ -52,10 +52,10 @@ export class GPA {
         let finalPortion = 1;
         
         if (nonZeros != 0) {
-            if (this.labSem == "1" || this.labSem.toUpperCase() == "1ST" || this.labSem.toUpperCase() == "FIRST") {
+            if (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") {
                 midtermPortion = 1.2;
                 finalPortion = 0.8;
-            } else if (this.labSem == "2" || this.labSem.toUpperCase() == "2ND" || this.labSem.toUpperCase() == "SECOND") {
+            } else if (this.labSem == "2" || this.labSem == "2ND" || this.labSem == "SECOND") {
                 midtermPortion = 0.08;
                 finalPortion = 0.12;
             }
@@ -135,7 +135,7 @@ export class GPA {
         } else if (this.credits >= 7.5) {
             if (nonZeros == 3) {
                 return 5 + ((this.credits - 5) / 2) 
-            } else if (nonZeros == 2 && (this.labSem == "2" || this.labSem.toUpperCase() == "2ND" || this.labSem.toUpperCase() == "SECOND")) {
+            } else if (nonZeros == 2 && (this.labSem == "2" || this.labSem == "2ND" || this.labSem == "SECOND")) {
                 return 2.5;
             } else {
                 return 5;
