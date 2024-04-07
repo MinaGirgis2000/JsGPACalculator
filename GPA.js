@@ -2,11 +2,11 @@ export class GPA {
     constructor(course) {
         this.name = course.name;
         this.grades = course.grades;
-        this.midterm = course.midterm || 0;
-        this.final = course.final || 0;
+        this.midterm = (course.midterm == undefined) ? 0 : course.midterm;
+        this.final = (course.final == undefined) ? 0 : course.final;
         this.credits = course.credits;
-        this.level = course.level.toUpperCase();
-        this.labSem = course.labSem.toUpperCase() || "None";
+        this.level = course.level;
+        this.labSem = (course.labSem == undefined) ? "None" : course.labSem;
         this.weightedValue = this.value(true);
         this.unweightedValue = this.value();
     }
