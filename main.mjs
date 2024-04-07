@@ -1,10 +1,10 @@
 import { GPA } from "./GPA.js";
 import courses from "./courses.json"
-// import courses10 from "./10thCourses.json"
-// import courses11 from "./11thcourses.json";
-// import courses12 from "./12thcourses.json";
+// import courses2 from "./courses2.json"
+// import courses3 from "./courses3.json";
+// import courses4 from "./courses4.json";
 
-const allCourses = [courses];  // , courses10, courses11, courses12];  // <-- can add multiple grades to accurate accurate values for each one
+const allCourses = [courses];  // , courses2, courses3, courses4];  // <-- can add multiple grades to accurate accurate values for each one
 
 let currentGPAValues = [0, 0, 0]; // [weighted GPA, unweighted GPA, credits]
 let gradeGPAValues = [0, 0, 0]; // [weighted GPA, unweighted GPA, credits]
