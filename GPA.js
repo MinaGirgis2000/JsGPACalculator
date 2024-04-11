@@ -107,10 +107,10 @@ export class GPA {
             return letter + "-";
         }
         else {
-            if (secondDigit < 1.5) {
+            if (secondDigit < 0.5) {
                 return letter + "-";
             }
-            else if (secondDigit >= 6.5 && firstDigit != 9) {
+            else if (secondDigit >= 5.5 && firstDigit != 9) {
                 return letter + "+";
             }
            return letter
