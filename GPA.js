@@ -3,6 +3,7 @@ export class GPA {
         this.name = course.name;
         this.grades = course.grades;
         this.midterm = (course.midterm == undefined) ? 0 : course.midterm;
+        this.midterm2 = (course.midterm2 == undefined) ? 0 : course.midterm2;
         this.final = (course.final == undefined) ? 0 : course.final;
         this.credits = course.credits;
         this.level = course.level;
@@ -33,7 +34,7 @@ export class GPA {
     get finalGrade() {        
         let nonZeros = 0;
         let sumGrade = 0;
-        let totalPortion = 10;
+        let totalPortion = 8;
 
         if (typeof this.grades == "string") {
             return this.grades.toUpperCase();
@@ -49,30 +50,33 @@ export class GPA {
         }
 
         let midtermPortion = 1;
+        let midterm2Portion = 0;
         let finalPortion = 1;
         
-        if (nonZeros != 0) {
+        if (this.midterm == 0) {
+            midtermPortion = 0;
+        } else if (nonZeros != 0) {
             if (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") {
                 midtermPortion = 1.2;
                 finalPortion = 0.8;
             } else if (this.labSem == "2" || this.labSem == "2ND" || this.labSem == "SECOND") {
-                midtermPortion = 0.08;
-                finalPortion = 0.12;
+                midtermPortion = 0.8;
+                finalPortion = 1.2;
             }
-        } else {
-            return 0;
         }
-        
-        if (this.midterm == 0) {
-            totalPortion -= 1;
-            midtermPortion = 0;
+
+        if (this.midterm2 != 0) {
+            finalPortion = 0.4;
+            midterm2Portion = 0.6;
+            midtermPortion = 1;
         }
+
         if (this.final == 0) {
-            totalPortion -= 1;
             finalPortion = 0;
         }
         
-        return ((sumGrade / nonZeros) * (totalPortion - midtermPortion - finalPortion) / totalPortion) + (this.midterm * midtermPortion / totalPortion) + (this.final * finalPortion / totalPortion);
+        totalPortion += midtermPortion + midterm2Portion + finalPortion;
+        return ((sumGrade / nonZeros) * (totalPortion - midtermPortion - midterm2Portion - finalPortion) / totalPortion) + (this.midterm * midtermPortion / totalPortion) + (this.midterm2 * midterm2Portion / totalPortion) + (this.final * finalPortion / totalPortion);
         
     }
 
