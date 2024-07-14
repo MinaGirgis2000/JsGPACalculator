@@ -31,7 +31,7 @@ export class GPA {
         return academic[letterIndex];
     }
 
-    get finalGrade() {        
+    get finalGrade() {
         let nonZeros = 0;
         let sumGrade = 0;
         let totalPortion = 8;
@@ -40,7 +40,7 @@ export class GPA {
             return this.grades.toUpperCase();
         } else {
             for (const grade of this.grades) {
-                sumGrade += grade;
+                sumGrade += Math.round(grade);
                 if (grade != 0) {
                     nonZeros++;
                 } else {
@@ -103,18 +103,18 @@ export class GPA {
             secondDigit -= 10;
         }
         
-        if (secondDigit >= 7.5 && firstDigit == 9) {
+        if (secondDigit >= 7.45 && firstDigit == 9) {
             return letter + "+";
         }
-        else if (secondDigit >= 9.5) {
+        else if (secondDigit >= 9.45) {
             letter = letters[letters.indexOf(letter) - 1];
             return letter + "-";
         }
         else {
-            if (secondDigit < 1.5) {
+            if (secondDigit < 1.45) {
                 return letter + "-";
             }
-            else if (secondDigit >= 5.5 && firstDigit != 9) {
+            else if (secondDigit >= 5.45 && firstDigit != 9) {
                 return letter + "+";
             }
            return letter
