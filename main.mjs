@@ -19,13 +19,13 @@ for (let i = 0; i < allCourses.length; i++) {
         gradeGPAValues[1] += course.unweightedValue * course.creditsEarned;
         gradeGPAValues[2] += course.creditsEarned;
 
-        courseOutput += course.name;    
+        courseOutput += course.name.substring(0, 15).toUpperCase();    
         if (course.name.length < 8) {
             courseOutput += "\t";
         }
 
         courseOutput += "\t ";
-        courseOutput += (!(typeof course.finalGrade == "string")) ? course.finalGrade.toFixed(2) : "";
+        courseOutput += (!(typeof course.finalGrade == "string")) ? course.finalGrade.toFixed(1) : "";
         courseOutput += "\t" + course.letter + "\t" + course.weightedValue.toFixed(2) + "\t   " + course.unweightedValue.toFixed(2);
         courseOutput += "\n";
     }
