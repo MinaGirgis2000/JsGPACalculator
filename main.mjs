@@ -23,11 +23,13 @@ for (let i = 0; i < allCourses.length; i++) {
         if (course.name.length < 8) {
             courseOutput += "\t";
         }
+
         courseOutput += "\t ";
         courseOutput += (!(typeof course.finalGrade == "string")) ? course.finalGrade.toFixed(2) : "";
         courseOutput += "\t" + course.letter + "\t" + course.weightedValue.toFixed(2) + "\t   " + course.unweightedValue.toFixed(2);
         courseOutput += "\n";
     }
+    
     console.log((9 + i) + "th Grade Weighted GPA: " + (gradeGPAValues[0] / gradeGPAValues[2]));
     console.log((9 + i) + "th Grade Unweighted GPA: " + (gradeGPAValues[1] / gradeGPAValues[2]));
     console.log("----------------------------------------------------|");
