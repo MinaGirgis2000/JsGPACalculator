@@ -83,7 +83,7 @@ export class GPA {
     get letter() {    
         if (typeof this.grades == "string") {
             return this.grades.toUpperCase();
-        } else if (this.finalGrade == 100) {
+        } else if (this.finalGrade >= 100) {
             return "A+";
         }
         
@@ -137,12 +137,14 @@ export class GPA {
         if (nonZeros == 4 || (nonZeros == 2 && this.credits == 2.5) || (nonZeros == 1 && this.credits == 1.25) || (nonZeros == 3 && this.credits == 3.75)) {
             return this.credits;
         } else if (this.credits >= 7.5) {
-            if (nonZeros == 3) {
-                return 5 + ((this.credits - 5) / 2) 
-            } else if (nonZeros == 2 && (this.labSem == "2" || this.labSem == "2ND" || this.labSem == "SECOND")) {
-                return 2.5;
+            if (nonZeros == 1) {
+                return (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") ? ((this.credits - 2.5) / 2) : ((this.credits - 5) / 2);
+            } else if (nonZeros == 2) {
+                return (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") ? ((this.credits - 2.5) / 2 + 2.5) : ((this.credits - 2.5) / 2);
+            } else if (nonZeros == 3) {
+                return (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") ? ((this.credits - 5) / 2 + 5) : ((this.credits - 2.5) / 2 + 2.5);
             } else {
-                return 5;
+                return this.credits;
             }
         } else {
             return this.credits / (this.credits / 1.25) * nonZeros;
