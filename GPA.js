@@ -23,6 +23,7 @@ export class GPA {
         if (weighted) {
             if (this.level == "H" || this.level == "HONORS") {
                 return honors[letterIndex];
+
             } else if (this.level == "AP" || this.level == "ADVANCED" || this.level == "ADVANCED PLACEMENT") {
                 return advanced[letterIndex];
             }
@@ -38,11 +39,14 @@ export class GPA {
 
         if (typeof this.grades == "string") {
             return this.grades.toUpperCase();
+
         } else {
             for (const grade of this.grades) {
                 sumGrade += Math.round(grade);
+                
                 if (grade != 0) {
                     nonZeros++;
+                
                 } else {
                     totalPortion -= 2;
                 }
@@ -55,10 +59,13 @@ export class GPA {
         
         if (this.midterm == 0) {
             midtermPortion = 0;
+
         } else if (nonZeros != 0) {
+            
             if (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") {
                 midtermPortion = 1.2;
                 finalPortion = 0.8;
+            
             } else if (this.labSem == "2" || this.labSem == "2ND" || this.labSem == "SECOND") {
                 midtermPortion = 0.8;
                 finalPortion = 1.2;
@@ -83,6 +90,7 @@ export class GPA {
     get letter() {    
         if (typeof this.grades == "string") {
             return this.grades.toUpperCase();
+        
         } else if (this.finalGrade >= 100) {
             return "A+";
         }
@@ -105,16 +113,16 @@ export class GPA {
         
         if (secondDigit >= 7.45 && firstDigit == 9) {
             return letter + "+";
-        }
-        else if (secondDigit >= 9.45) {
+        
+        } else if (secondDigit >= 9.45) {
             letter = letters[letters.indexOf(letter) - 1];
             return letter + "-";
-        }
-        else {
+        
+        } else {
             if (secondDigit < 1.45) {
                 return letter + "-";
-            }
-            else if (secondDigit >= 5.45 && firstDigit != 9) {
+            
+            } else if (secondDigit >= 5.45 && firstDigit != 9) {
                 return letter + "+";
             }
            return letter
@@ -136,13 +144,18 @@ export class GPA {
         
         if (nonZeros == 4 || (nonZeros == 2 && this.credits == 2.5) || (nonZeros == 1 && this.credits == 1.25) || (nonZeros == 3 && this.credits == 3.75)) {
             return this.credits;
+        
         } else if (this.credits >= 7.5) {
+            
             if (nonZeros == 1) {
                 return (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") ? ((this.credits - 2.5) / 2) : ((this.credits - 5) / 2);
+            
             } else if (nonZeros == 2) {
                 return (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") ? ((this.credits - 2.5) / 2 + 2.5) : ((this.credits - 2.5) / 2);
+            
             } else if (nonZeros == 3) {
                 return (this.labSem == "1" || this.labSem == "1ST" || this.labSem == "FIRST") ? ((this.credits - 5) / 2 + 5) : ((this.credits - 2.5) / 2 + 2.5);
+            
             } else {
                 return this.credits;
             }
